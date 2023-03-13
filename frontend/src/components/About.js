@@ -104,16 +104,16 @@ const Person = ({ avatar, title, profile, index, loading=false }) => {
 }
 
 const About = () => {
-  const [members, setMembers] = useState([])
+  const [members, setData] = useState([{}])
   useEffect(() => {
-    // console.log('before fetch:', members === []);
-    const fetchMembers = async () => {
-      const res = await axios.get(`${BACKEND_URL}/api/members?populate=*`)
-      setMembers(res.data.data)
-      // console.log('after fetch:', members === []);
-    }
-
-    fetchMembers()
+    fetch('/members').then(
+      res => res.json()
+    ).then(
+      data => {
+        setData(data)
+        console.log(data);
+      }
+    )
   }, [])
 
   const People = ({role, title}) => (
